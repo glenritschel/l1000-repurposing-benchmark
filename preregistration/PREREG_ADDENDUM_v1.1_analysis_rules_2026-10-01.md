@@ -1,0 +1,10 @@
+# Pre-registration addendum v1.1: analysis rules fixed after Phase A and BEFORE any score
+
+**2026-10-01 ~16:40 EDT.** Base pre-registration: `PREREG_L1000_BENCHMARK_2026-10-01_COMMITTED.md`, SHA-256 7eee1779...c9a2, unchanged. These rules fill gaps that Phase A exposed. No connectivity score had been computed for any row when they were written. They are implemented in `RR_BENCHMARK_phaseB1_signatures_freeze.ipynb`.
+
+1. **Drugs with several LINCS IDs.** A drug's percentile is the MEDIAN of its IDs' percentile ranks (same median rule the pre-registration uses for the three-drug myocardium case). The permutation null draws matching numbers of random IDs, preserving structure.
+2. **Formula check on IDs.** Within each drug, keep IDs whose largest-fragment molecular formula equals the reference formula (the ID named exactly as the drug with the most library signatures). Others are dropped and listed. Triggered by tacrolimus BRD-K08845546, whose InChIKey skeleton differs from the other four tacrolimus IDs.
+3. **Scale.** If a row's 99th-percentile expression exceeds 100 it is linear scale and gets log2(max(x,1)); otherwise it is used as deposited. (Row 17, GPL96 MAS5 values.)
+4. **GPL96 annotation fallback.** If the GPL96 annotation cannot be fetched, probes map through the GPL570 annotation; HG-U133A probe IDs are a subset of HG-U133 Plus 2.
+5. **Spatial rows aggregate to the donor.** Row 8 (GeoMx ROIs) is averaged to one value per donor within arm when a donor or patient field exists, otherwise kept per ROI and flagged. Row 6 turned out to be spatial transcriptomics as well (spot counts in a supplementary archive), contrary to the protocol's "bulk"; it gets the same treatment once its file layout is known.
+6. **Row 13 data availability.** GSE134662's series record holds no expression data. If no per-sample supplementary file holds counts, row 13 cannot be scored from the deposit; that is a deposit ground of the same kind as the five recorded exclusions, and any such change to n will be recorded as v1.2 before scoring.

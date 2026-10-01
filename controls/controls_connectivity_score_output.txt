@@ -1,0 +1,16 @@
+control 1: PASS  self-query equals the exact analytic maximum
+    score +0.950250000000   analytic maximum +0.950250000000
+control 2: PASS  swapping the query's up and down sets flips the sign exactly
+    original +0.950250000000   swapped -0.950250000000
+control 3: PASS  unrelated signatures score near zero (max |score| below 0.25, |mean| below 0.01)
+    max |score| 0.1690   mean -0.00171   against a self-query of 0.9503
+control 4: PASS  null distribution over 4,000 random signatures (978 genes, 150 up and 150 down)
+    exactly zero 43.9%   sd of nonzero 0.0672   mean -0.00091
+control 5: PASS  incoherent query (both sets at the top of the signature) returns exactly zero
+    score 0.0
+control 6: PASS  reversing the signature negates the score exactly, outside the zero rule
+    self-query +0.950250000000   reversed -0.950250000000   worst |sum| where neither score is zero 1.11e-16
+    measured, not asserted: in 69 of 5000 random queries (1.4%) one score is exactly
+    zero and its reversed counterpart is not
+
+6 of 6 controls pass   (seed 20261001, numpy 2.5.3)
